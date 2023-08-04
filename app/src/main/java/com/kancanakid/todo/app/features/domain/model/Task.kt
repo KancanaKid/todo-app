@@ -13,5 +13,7 @@ data class Task(
     val dueDate:Long,
     val description:String,
     @ColumnInfo(name = "is_completed")
-    val isCompleted:Boolean
+    val isCompleted:Boolean = false
 )
+
+class InvalidTaskException(message:String):Exception(message)
