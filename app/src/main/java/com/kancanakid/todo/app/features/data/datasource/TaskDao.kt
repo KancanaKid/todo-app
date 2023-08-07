@@ -8,6 +8,10 @@ import androidx.room.Query
 import com.kancanakid.todo.app.features.domain.model.Task
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object for the task table.
+ *
+ */
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM task")

@@ -7,7 +7,10 @@ import com.kancanakid.todo.app.features.data.repositories.TaskRepositoryImpl
 import com.kancanakid.todo.app.features.domain.repositories.TaskRepository
 import com.kancanakid.todo.app.features.domain.usecase.AddTaskUseCase
 import com.kancanakid.todo.app.features.domain.usecase.DeleteTaskUseCase
+import com.kancanakid.todo.app.features.domain.usecase.GetTaskUseCase
 import com.kancanakid.todo.app.features.domain.usecase.GetTasksUseCase
+import com.kancanakid.todo.app.features.domain.usecase.SetCompleteTaskUseCase
+import com.kancanakid.todo.app.features.domain.usecase.SetIncompleteTaskUseCase
 import com.kancanakid.todo.app.features.domain.usecase.TaskUseCases
 import dagger.Module
 import dagger.Provides
@@ -37,7 +40,10 @@ object AppModule {
         return TaskUseCases(
             getTasks = GetTasksUseCase(repository),
             deleteTask = DeleteTaskUseCase(repository),
-            addTask = AddTaskUseCase(repository)
+            addTask = AddTaskUseCase(repository),
+            setCompleteTask = SetCompleteTaskUseCase(repository),
+            getTask = GetTaskUseCase(repository),
+            setIncompleteTask = SetIncompleteTaskUseCase(repository)
         )
     }
 }

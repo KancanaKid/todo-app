@@ -4,7 +4,9 @@ import com.kancanakid.todo.app.features.data.datasource.TaskDao
 import com.kancanakid.todo.app.features.domain.model.Task
 import com.kancanakid.todo.app.features.domain.repositories.TaskRepository
 import kotlinx.coroutines.flow.Flow
-
+/**
+ * Repository implementation from TaskRepository abstract / interface
+ */
 class TaskRepositoryImpl( private val taskDao: TaskDao) : TaskRepository {
     override fun getTasks(): Flow<List<Task>> {
         return taskDao.getTask()

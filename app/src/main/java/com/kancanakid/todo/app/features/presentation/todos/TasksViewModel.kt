@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kancanakid.todo.app.features.domain.model.Task
 import com.kancanakid.todo.app.features.domain.usecase.TaskUseCases
 import com.kancanakid.todo.app.features.domain.util.TaskOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,11 +18,8 @@ class TasksViewModel @Inject constructor(
     private val taskUseCases: TaskUseCases
 ):ViewModel(){
 
-    private val _uiState = mutableStateOf<TasksState>(TasksState())
+    private val _uiState = mutableStateOf(TasksState())
     val uiState: State<TasksState> = _uiState
-
-    // to flag the last task item deleted
-    private var recentlyDeletedTask:Task? = null
 
     private var getTaskJob:Job? = null
 
@@ -37,25 +33,26 @@ class TasksViewModel @Inject constructor(
                 if(uiState.value.taskOrder::class == event.taskOrder::class){
                     return
                 }
-
-            }
-            is TasksEvent.DeleteTask -> {
-                viewModelScope.launch {
-                    taskUseCases.deleteTask(event.task)
-                    recentlyDeletedTask = event.task
-                }
-            }
-            is TasksEvent.RestoreTask -> {
-                viewModelScope.launch {
-                    taskUseCases.addTask(recentlyDeletedTask ?: return@launch)
-                    recentlyDeletedTask = null
-                }
+                getTasks(event.taskOrder)
             }
             is TasksEvent.ToggleOrderSection -> {
                 _uiState.value = uiState.value.copy(
                     isOrderSectionVisible = !uiState.value.isOrderSectionVisible
                 )
 
+            }
+            is TasksEvent.SetComplete -> {
+                viewModelScope.launch {
+                    taskUseCases.setCompleteTask(event.task)
+                }
+            }
+            is TasksEvent.SetIncomplete -> {
+                viewModelScope.launch {
+                    taskUseCases.setIncompleteTask(event.task)
+                }
+            }
+            is TasksEvent.Refresh -> {
+                getTasks(TaskOrder.All)
             }
         }
     }

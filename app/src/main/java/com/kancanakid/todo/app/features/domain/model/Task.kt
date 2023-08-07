@@ -4,6 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Task entity as task table requirement.
+ * @param id as primary key
+ * @param title as task title
+ * @param dueDate as task duedate
+ * @param description as task description
+ * @param isCompleted as complete/incomplete task state
+ * @exception InvalidTaskException as checking user input validation
+ */
 @Entity
 data class Task(
     @PrimaryKey
