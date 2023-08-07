@@ -93,8 +93,10 @@ fun AddEditTaskScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.onEvent(AddEditTaskEvent.DeleteTask) }) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Color.White)
+                    if(titleState.text.isNotBlank() && descriptionState.text.isNotBlank() && dueDateState.text.isNotBlank()){
+                        IconButton(onClick = { viewModel.onEvent(AddEditTaskEvent.DeleteTask) }) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Color.White)
+                        }
                     }
                 }
             )
